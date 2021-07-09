@@ -44,7 +44,9 @@ const headerAppender = (selector) => {
   // It should append the header to the element in the DOM that matches the given selector.
   //
 
+  let headerElement = document.querySelector(selector) //finds the appropriate element in the DOM to append the header to
   
+  headerElement.appendChild(Header('a title','today','frosty')) //adds the header
 }
 
 export { Header, headerAppender }
