@@ -13,6 +13,7 @@ const Header = (title, date, temp) => {
   //
 
   let header = document.createElement('header')
+  let date = document.createElement('span')
 }
 
 const headerAppender = (selector) => {
