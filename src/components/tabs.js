@@ -17,8 +17,10 @@ const Tabs = (topics) => {
   //
 
   let topicsDiv = document.createElement('div') //creates parent element
+  //console.log(typeof topics)
 
   topics.forEach((topic) => { //iterates though topics array and creates a div with class "tab" for each, then appends to the parent element
+    console.log(topic)
     let tab = document.createElement('div')
     tab.classList.add('tab')
     tab.textContent = topic
@@ -37,11 +39,16 @@ const tabsAppender = (selector) => {
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
   //
 
+  let tabs = document.querySelector(selector)
+
   axios.get('http://localhost:5000/api/topics')
     .then (res => {
-      let tabs = document.querySelector(selector)
-      
-      tabs.appendChild(Tabs(res.data))
+      //let topicsData = []
+      console.log(res.data.topics) 
+      // res.data.forEach((element) => {
+      //   topicsData.push(element)
+      // })
+      tabs.appendChild(Tabs(res.data.topics))
     })
     .catch(err => console.log(err.message))
 }
