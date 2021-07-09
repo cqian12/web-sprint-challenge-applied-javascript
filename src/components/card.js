@@ -65,9 +65,12 @@ const cardAppender = (selector) => {
     .then(res => {
       console.log(res.data)
 
-      let articleData = res.data
-      articleData.forEach(element => {
-        element.forEach(article => {
+      let articleTopics = Object.keys(res.data.articles)
+
+      console.log(articleTopics)
+      articleTopics.forEach(element => {
+        let currentTopic = res.data.articles[`${element}`]
+        currentTopic.forEach(article => {
           cards.appendChild(Card(article))
         })
       })
