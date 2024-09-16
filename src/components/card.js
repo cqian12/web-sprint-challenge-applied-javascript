@@ -1,3 +1,5 @@
+import axios from "axios"
+
 const Card = (article) => {
   // TASK 5
   // ---------------------
@@ -17,6 +19,34 @@ const Card = (article) => {
   //   </div>
   // </div>
   //
+
+  //element creation
+  let card = document.createElement('div')
+  let headline = document.createElement('div')
+  let author = document.createElement('div')
+  let imgContainer = document.createElement('div')
+  let photo = document.createElement('img')
+  let name = document.createElement('span')
+
+  //class naming
+  card.classList.add('card')
+  headline.classList.add('headline')
+  author.classList.add('author')
+  imgContainer.classList.add('img-container')
+
+  //adding content of elements
+  headline.textContent = article.headline
+  photo.src = article.authorPhoto
+  name.textContent = `By: ${article.authorName}`
+
+  //appending children to parent element
+  card.appendChild(headline)
+  card.appendChild(author)
+  author.appendChild(imgContainer)
+  author.appendChild(name)
+  imgContainer.appendChild(photo)
+  
+  return card //returns parent element
 }
 
 const cardAppender = (selector) => {
@@ -28,6 +58,21 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
+
+  let cards = document.querySelector(selector) //element where cards are to be added
+
+  axios.get('http://localhost:5000/api/articles') //obtains articles from endpoint
+    .then(res => {
+      let articleTopics = Object.keys(res.data.articles) //creates an array populated by the article topics
+
+      articleTopics.forEach(element => { //loops through the topics array, then 
+        let currentTopic = res.data.articles[element] //creates an array of articles for each topic
+        currentTopic.forEach(article => { //for each article in a topic, creates a card and then
+          cards.appendChild(Card(article)) //adds the article card to the cards element
+        })
+      })
+    })
+    .catch(err => console.log(err.message)) //displays error message in case of failure to obtain articles
 }
 
 export { Card, cardAppender }
